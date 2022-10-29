@@ -1,0 +1,8 @@
+[
+    {
+      "sourceLanguage" : "German",
+      "translationLanguage" : "Spanish",
+      "initialText" : "Demokratien",
+      "expectedResult": "Democracia"
+    }
+]
