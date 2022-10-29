@@ -18,6 +18,7 @@ class TranslatePage(BasePage):
         self.initial_input_locator = '//textarea'
         self.swap_languages_locator = '//*[starts-with(@aria-label,"Swap languages")]'
         self.translation_value_locator = '//div/span[@lang]'
+        self.screen_keyboard_locator = '//*[starts-with(@aria-label,"Show the Input")]//preceding::a[1]'
 
     def select_source_language_from_dropdown(self, language):
         self.click(self.source_language_dropdown_locator)
@@ -43,3 +44,14 @@ class TranslatePage(BasePage):
 
     def get_translation_value(self):
         return self.get_value(self.translation_value_locator)
+
+    def clear_input_field(self):
+        self.click('[aria-label="Clear source text"')
+
+    def select_screen_keyboard(self):
+        self.click_using_xpath(self.screen_keyboard_locator)
+
+    def type_hi_using_screen_keyboard(self):
+        self.click_text("h")
+        self.click_text("i")
+        self.click_text("!")
