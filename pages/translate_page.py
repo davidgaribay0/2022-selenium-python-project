@@ -1,9 +1,3 @@
-import time
-
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-
 from pages.base_page import BasePage
 
 
@@ -31,13 +25,8 @@ class TranslatePage(BasePage):
         :param language: the language that will be selected
         """
         self.click(self.source_language_dropdown_locator)
-        # TODO: Move to base page
-
-        element = WebDriverWait(self.driver, 5).until(
-            EC.presence_of_all_elements_located((By.XPATH, f'{self.source_languages_partial_locator}"{language}"]'))
-        )
-        element[
-            self.source_languages_index].click()
+        self.load_and_click_at_index(self.source_languages_index,
+                                     f'{self.source_languages_partial_locator}"{language}"]')
 
     def select_translation_language_from_dropdown(self, language):
         """
@@ -45,13 +34,8 @@ class TranslatePage(BasePage):
         :param language: the language that will be selected
         """
         self.click(self.target_language_dropdown_locator)
-        # TODO: Move to base page
-
-        element = WebDriverWait(self.driver, 5).until(
-            EC.presence_of_all_elements_located((By.XPATH, f'{self.source_languages_partial_locator}"{language}"]'))
-        )
-        element[
-            self.target_languages_index].click()
+        self.load_and_click_at_index(self.target_languages_index,
+                                     f'{self.source_languages_partial_locator}"{language}"]')
 
     def input_initial_text(self, text):
         """

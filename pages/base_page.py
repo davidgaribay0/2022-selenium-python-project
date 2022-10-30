@@ -89,3 +89,14 @@ class BasePage:
         return WebDriverWait(self.driver, 5).until(
             EC.presence_of_element_located((By.XPATH, locator))
         )
+
+    def load_and_click_at_index(self, index, locator):
+        """
+        Waits until all elements with the given locator using XPath are loaded and then clicks on the item in index provided
+        :param index: index of item you would like to click on
+        :param locator: XPath locator for elements
+        """
+        element = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_all_elements_located((By.XPATH, locator))
+        )
+        element[index].click()
