@@ -1,6 +1,8 @@
 import time
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 from pages.base_page import BasePage
 
@@ -29,9 +31,12 @@ class TranslatePage(BasePage):
         :param language: the language that will be selected
         """
         self.click(self.source_language_dropdown_locator)
-        time.sleep(1)
         # TODO: Move to base page
-        self.driver.find_elements(By.XPATH, f'{self.source_languages_partial_locator}"{language}"]')[
+
+        element = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_all_elements_located((By.XPATH, f'{self.source_languages_partial_locator}"{language}"]'))
+        )
+        element[
             self.source_languages_index].click()
 
     def select_translation_language_from_dropdown(self, language):
@@ -40,9 +45,12 @@ class TranslatePage(BasePage):
         :param language: the language that will be selected
         """
         self.click(self.target_language_dropdown_locator)
-        time.sleep(1)
         # TODO: Move to base page
-        self.driver.find_elements(By.XPATH, f'{self.source_languages_partial_locator}"{language}"]')[
+
+        element = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_all_elements_located((By.XPATH, f'{self.source_languages_partial_locator}"{language}"]'))
+        )
+        element[
             self.target_languages_index].click()
 
     def input_initial_text(self, text):
@@ -64,7 +72,6 @@ class TranslatePage(BasePage):
         Clicks on the swap language button
         """
         self.click_using_xpath(self.swap_languages_locator)
-        time.sleep(4)
 
     def get_translation_value(self):
         """

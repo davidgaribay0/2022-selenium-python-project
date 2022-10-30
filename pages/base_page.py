@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -40,20 +42,19 @@ class BasePage:
         Clicks on element that is located using css selector
         :param element: css selector locator
         """
+        time.sleep(.5)
         element = WebDriverWait(self.driver, 5).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, element))
+            EC.element_to_be_clickable((By.CSS_SELECTOR, element))
         )
         element.click()
+        time.sleep(.5)
 
     def click_using_xpath(self, element):
         """
         Clicks on element that is located using XPath selector
         :param element: XPath locator
         """
-        element = WebDriverWait(self.driver, 5).until(
-            EC.presence_of_element_located((By.XPATH, element))
-        )
-        element.click()
+        self.wait_until_xpath_located(element).click()
 
     def get_value(self, element):
         """
@@ -61,8 +62,7 @@ class BasePage:
         :param element: XPath locator
         :return: text of element
         """
-        element = self.driver.find_element(By.XPATH, element)
-        return element.text
+        return self.wait_until_xpath_located(element).text
 
     def get_value_of_text_area(self, element):
         """
@@ -70,8 +70,7 @@ class BasePage:
         :param element: XPath locator
         :return: value of textarea
         """
-        element = self.driver.find_element(By.XPATH, element)
-        return element.get_attribute("value")
+        return self.wait_until_xpath_located(element).get_attribute("value")
 
     def click_text(self, text):
         """
@@ -80,3 +79,13 @@ class BasePage:
         """
         element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, f'//*[text()="{text}"]')))
         element.click()
+
+    def wait_until_xpath_located(self, locator):
+        """
+        Waits until the presence of an element is detected
+        :param locator: XPath locator
+        :return: web element
+        """
+        return WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((By.XPATH, locator))
+        )

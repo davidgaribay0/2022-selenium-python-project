@@ -8,6 +8,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 from pages.translate_page import TranslatePage
+from utils.browser import Browser
 
 LOGGER = logging.getLogger(__name__)
 
@@ -23,11 +24,7 @@ class TestTranslation:
 
     @pytest.fixture(autouse=True)
     def setup(self):
-        options = Options()
-        # options.add_argument("--headless")
-        options.add_argument("--start-maximized")
-        self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-        self.driver.set_window_size(1920, 1080)
+        self.driver = Browser("Chrome", False).driver
         self.read_data()
         try:
             """
@@ -38,10 +35,9 @@ class TestTranslation:
             """
             self.translation_page = TranslatePage(self.driver)
             self.translation_page.select_source_language_from_dropdown(self.data[0]['source_language'])
-            time.sleep(1)
             self.translation_page.select_translation_language_from_dropdown(self.data[0]['translation_language'])
             self.translation_page.input_initial_text(self.data[0]['initial_text'])
-            time.sleep(10)
+            time.sleep(.5)
 
             # Run actual test
             yield
@@ -62,7 +58,7 @@ class TestTranslation:
         Verifies the result of the translation language value and source language value
         """
         self.translation_page.swap_languages()
-        time.sleep(2)
+        time.sleep(1)
         LOGGER.info(f'Translation Value - {self.translation_page.get_translation_value()}')
         LOGGER.info(f'Initial Value - {self.translation_page.get_initial_text_value()}')
         assert self.translation_page.get_translation_value() == self.data[0]['initial_text']
@@ -74,5 +70,4 @@ class TestTranslation:
         Enters "hi!" using the on-screen keyboard
         """
         self.translation_page.clear_input_field()
-        time.sleep(1)
         self.translation_page.type_hi_using_screen_keyboard()
