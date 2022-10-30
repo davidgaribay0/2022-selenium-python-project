@@ -1,5 +1,6 @@
 import time
 
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -42,12 +43,10 @@ class BasePage:
         Clicks on element that is located using css selector
         :param element: css selector locator
         """
-        time.sleep(.5)
         element = WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, element))
         )
-        element.click()
-        time.sleep(.5)
+        ActionChains(self.driver).move_to_element(element).click(element).perform()
 
     def click_using_xpath(self, element):
         """
@@ -99,4 +98,5 @@ class BasePage:
         element = WebDriverWait(self.driver, 5).until(
             EC.presence_of_all_elements_located((By.XPATH, locator))
         )
-        element[index].click()
+        time.sleep(.5)
+        ActionChains(self.driver).move_to_element(element[index]).click(element[index]).perform()
