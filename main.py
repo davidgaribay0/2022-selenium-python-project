@@ -1,2 +1,0 @@
-url = "https://translate.google.com/"
-

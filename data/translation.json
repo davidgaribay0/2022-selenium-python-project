@@ -1,8 +1,8 @@
 [
     {
-      "sourceLanguage" : "German",
-      "translationLanguage" : "Spanish",
-      "initialText" : "Demokratien",
-      "expectedResult": "Democracia"
+      "source_language" : "German",
+      "translation_language" : "Spanish",
+      "initial_text" : "Demokratie",
+      "expected_result": "la democracia"
     }
 ]
