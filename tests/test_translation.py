@@ -1,11 +1,13 @@
+import json
+import logging
+import time
+
+import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+
 from pages.translate_page import TranslatePage
-import json
-import pytest
-import logging
-import time
 
 LOGGER = logging.getLogger(__name__)
 
