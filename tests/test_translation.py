@@ -67,7 +67,7 @@ class TestTranslation:
     def test_screen_keyboard(self):
         """
         Clears the input field (source language)
-        Enters "hi!" using the on-screen keyboard
+        Enters "Hi!" using the on-screen keyboard
         """
         self.translation_page.clear_input_field()
         self.translation_page.type_hi_using_screen_keyboard()
