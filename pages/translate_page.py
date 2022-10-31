@@ -75,7 +75,8 @@ class TranslatePage(BasePage):
         Opens up the on-screen keyboard and enters "hi!"
         """
         self.click_using_xpath(self.screen_keyboard_locator)
-        self.click_text("h")
+        self.click(self.screen_keyboard_shift_key_locator)
+        self.click_text("H")
         self.click_text("i")
         self.click(self.screen_keyboard_shift_key_locator)
         self.click_text("!")
