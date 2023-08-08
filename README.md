@@ -1,4 +1,4 @@
-# Test Automation take-home challenge
+# Test Automation Selenium/Python Sample Project
 
 ## Running the project
 
